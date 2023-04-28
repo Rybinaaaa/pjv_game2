@@ -35,7 +35,7 @@ public class Map {
             new Level("/res/maps/map1.txt", "/res/backgrounds/Background1.png")
     };
 
-    int maxScreenRow, maxScreenColumn;
+    int maxScreenRow, maxScreenColumn, multiplyX, multiplyY;
 
     public Tile getTileOption(int option) {
         switch (option) {
@@ -59,12 +59,12 @@ public class Map {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             int option;
 
-            for (int i = 0; i < maxScreenRow; i++) {
+            for (int i = 0; i < maxScreenRow * multiplyY; i++) {
 //                System.out.println("1");
 
                 String row = br.readLine();
                 String[] numbers = row.split(" ");
-                for (int j = 0; j < maxScreenColumn; j++) {
+                for (int j = 0; j < maxScreenColumn * multiplyY; j++) {
                     option = Integer.parseInt(numbers[j]);
 //                    System.out.println("2");
                     if (option == 0) {

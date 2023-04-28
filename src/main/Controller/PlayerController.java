@@ -27,16 +27,9 @@ public class PlayerController {
     ;
 
     private void updateCollision() {
-        int vector = Math.abs(player.getX()),
-//                right = Math.abs(player.getX() + player.getWidth()),
-                bottom = player.getY(),
-                top = Math.abs(player.getY() + player.getHeight());
-
-//        if (direction == )
-
-//        isCollisionBottom = isCollision(right, bottom);
-//        isCollisionTop = isCollision(right, top);
-//        isCollisionRight = isCollisionTop
+        isCollisionTop = isCollision(player.getX(), player.getY());
+        isCollisionBottom = isCollision(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight());
+        isCollisionMove = isCollision(player.getX() + player.getWidth() * 4 / 5, player.getY() + 48);
     }
 
     public PlayerController(Player player, KeyHandler keyH, Map map) {
@@ -52,95 +45,47 @@ public class PlayerController {
     private boolean jumping = false;
 
     private void moving() {
+        updateCollision();
         moveDown();
-        if (keyH.upPressed && !jumping) {
-            player.setDirection("up");
+        if (keyH.upPressed && !jumping && isCollisionBottom) {
+//            player.setDirection("up");
             jumping = true;
             initialY = player.getY();
             jumpingHeight = initialY - player.getJumpingDistance();
         } else if (keyH.leftPressed) {
-            moveLeft();
+//            player.setX(player.getX() + player.getSpeedX());
+            player.moveLeft();
+            moveNext();
         } else if (keyH.rightPressed) {
-            moveRight();
+            player.moveRight();
+            moveNext();
         }
 
         if (jumping) {
             player.setY(player.getY() - player.getSpeedY());
 
-            Tile tile = map.getTile((int) player.getX(), (int) player.getY());
-            boolean collision = false;
-            if (tile != null) {
-                collision = tile.isCollision();
-            }
-
-            if (player.getY() <= jumpingHeight) {
-                player.setSpeedY(-player.getSpeedY());
-            }
-
-            if (player.getY() >= initialY || collision) {
-                player.setY(initialY);
+            System.out.println(jumpingHeight);
+            if (player.getY() <= jumpingHeight || isCollisionTop) {
                 jumping = false;
-                player.setSpeedY(-player.getSpeedY());
             }
-
         }
 
         timer--;
 
         if (timer <= 0) {
-//            player.spriteNumber = (player.spriteNumber) % 2 + 1;
+            player.setImage();
             timer = 10;
-
-//            switch (player.getDirection()) {
-//                case "up":
-//                    if (player.spriteNumber == 1) {
-//                        player.setImageSrc(player.getUp1());
-//                    } else {
-//                        player.setImageSrc(player.getUp2());
-//                    }
-//                    break;
-//                case "down":
-//                    if (player.spriteNumber == 1) {
-//                        player.setImageSrc(player.getDown1());
-//                    } else {
-//                        player.setImageSrc(player.getDown2());
-//                    }
-//                    break;
-//                case "left":
-//                    if (player.spriteNumber == 1) {
-//                        player.setImageSrc(player.getLeft1());
-//                    } else {
-//                        player.setImageSrc(player.getLeft2());
-//                    }
-//                    break;
-//                case "right":
-//                    if (player.spriteNumber == 1) {
-//                        player.setImageSrc(player.getRight1());
-//                    } else {
-//                        player.setImageSrc(player.getRight2());
-//                    }
-//                    break;
-            }
         }
     }
 
-    private void moveRight() {
-        player.setDirection("right");
-        player.setX(player.getX() + player.getSpeedX());
-    }
-
-    private void moveLeft() {
-        player.setDirection("left");
-        player.setX(player.getX() - player.getSpeedX());
+    private void moveNext() {
+        if (!isCollisionMove) {
+            player.setX(player.getX() + player.getSpeedX());
+        }
     }
 
     private void moveDown() {
-        Tile tile = map.getTile((int) player.getX(), (int) player.getY());
-        if (!jumping && tile == null) {
-            player.setY(player.getY() + player.getSpeedY());
-            return;
-        }
-        if (!jumping && !tile.isCollision()) {
+        if (!jumping && !isCollisionBottom) {
             player.setY(player.getY() + player.getSpeedY());
         }
     }

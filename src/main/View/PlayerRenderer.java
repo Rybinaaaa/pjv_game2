@@ -16,19 +16,6 @@ public class PlayerRenderer {
     }
 
     public void draw(Graphics2D g2) {
-
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream(player.getImageSrc()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        g2.setColor(Color.red);
-        g2.drawOval(player.getX(), player.getY(), 5, 5);
-//        g2.drawOval((player.getX() + player.getSize()), player.getY(), 5, 5);
-        g2.drawOval(player.getX() + player.getWidth() - 16, player.getY() + player.getHeight() - 16, 5, 5);
-        g2.drawImage(image, player.getX(), player.getY(), player.getWidth(), player.getHeight(), null);
+        g2.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), null);
     }
 }

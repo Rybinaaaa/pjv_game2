@@ -3,7 +3,6 @@ package main.View;
 import main.Model.Map;
 import main.Model.entity.Player;
 import main.Controller.KeyHandler;
-import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,8 +24,6 @@ public class Screen extends JPanel {
     PlayerRenderer playerRenderer;
 
     MapRenderer mapRenderer;
-
-    TileManager tileM;
 
 
     public Screen(int originalTileSize, int scale, int maxScreenColumn, int maxScreenRow, Player player, KeyHandler keyH, Map map) {
@@ -53,8 +50,6 @@ public class Screen extends JPanel {
         this.setDoubleBuffered(true);
         this.setFocusable(true);
 
-
-        tileM = new TileManager(this);
     }
 
 //    Player player = new Player(this, keyH);

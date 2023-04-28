@@ -3,6 +3,11 @@ package main.Model.entity;
 import main.Controller.KeyHandler;
 import main.View.Screen;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.LinkedList;
+
 public class Player extends Entity {
 
     Screen screen;
@@ -11,34 +16,58 @@ public class Player extends Entity {
     public Player(KeyHandler keyH) {
         this.keyH = keyH;
 
+        this.runAnimation = loadAnimation("/res/player/run/B_witch_run.png", 32, 48, 8);
         setDefaultValues();
     }
 
-    private String up1;
-    private String up2;
-    private String right1;
-    private String right2;
-    private String left1;
-    private String left2;
-    private String down1;
-    private String down2;
+//    private BufferedImage[] running;
 
-    public String getUp1() {
-        return up1;
+    private NodeImage[] runAnimation;
+    private NodeImage[] atackAnimation;
+    private NodeImage[] deathAnimation;
+    private NodeImage[] animationPresent;
+
+    public void setAnimationType(String option) {
+        switch (option) {
+            case "run":
+                animationPresent = runAnimation;
+        }
     }
+
+    private NodeImage[] loadAnimation(String src, int width, int height, int count) {
+        BufferedImage animation = null;
+        NodeImage[] animationList = new NodeImage[count];
+        try {
+            animation = ImageIO.read(getClass().getResourceAsStream(src));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < count; i++) {
+            assert animation != null;
+            NodeImage node = new NodeImage(animation.getSubimage(0, i * height, width, height));
+            animationList[i] = node;
+        }
+
+        for (int i = 0; i < count; i++) {
+            if (i != 0) {
+                animationList[i].prevNode = animationList[i - 1];
+            } else {
+                animationList[i].prevNode = animationList[count - 1];
+            }
+            if (i != count - 1) {
+                animationList[i].nextNode = animationList[i + 1];
+            } else {
+                animationList[i].nextNode = animationList[0];
+            }
+        }
+        return animationList;
+    }
+
 
     public void setDefaultValues() {
         super.setDefaultValues();
-//        size = 64;
-        up1 = "/res/player/run/B_witch_run_1.png";
-        up2 = "/res/player/run/B_witch_run_2.png";
-        right1 = "/res/player/run/B_witch_run_3.png";
-        right2 = "/res/player/run/B_witch_run_4.png";
-        left1 = "/res/player/run/B_witch_run_5.png";
-        left2 = "/res/player/run/B_witch_run_6.png";
-        down1 = "/res/player/run/B_witch_run_7.png";
-        down2 = "/res/player/run/B_witch_run_8.png";
-        imageSrc = down1;
+        setAnimationType("run");
+        image = animationPresent[0];
     }
 
     public void setScreen(Screen screen) {
@@ -49,35 +78,9 @@ public class Player extends Entity {
         return jumpingDistance;
     }
 
+
+
     public void setJumpingDistance(int jumpingDistance) {
         this.jumpingDistance = jumpingDistance;
-    }
-
-    public String getUp2() {
-        return up2;
-    }
-
-    public String getRight1() {
-        return right1;
-    }
-
-    public String getRight2() {
-        return right2;
-    }
-
-    public String getLeft1() {
-        return left1;
-    }
-
-    public String getLeft2() {
-        return left2;
-    }
-
-    public String getDown1() {
-        return down1;
-    }
-
-    public String getDown2() {
-        return down2;
     }
 }

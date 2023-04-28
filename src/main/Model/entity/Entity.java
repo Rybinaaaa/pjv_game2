@@ -1,24 +1,35 @@
 package main.Model.entity;
 
+import java.awt.image.BufferedImage;
+
 public abstract class Entity {
 
     private int x, y, speedX, speedY;
 //    int size = 48;
     private int width, height;
-    String imageSrc;
+    NodeImage image;
     public String direction;
 
     public int spriteCounter = 0;
     public int spriteNumber = 1;
     int jumpingDistance;
 
+    protected class NodeImage {
+        BufferedImage image;
+        NodeImage prevNode;
+        NodeImage nextNode;
 
-    public String getImageSrc() {
-        return imageSrc;
+        public NodeImage(BufferedImage image) {
+            this.image = image;
+        }
     }
 
-    public void setImageSrc(String imageSrc) {
-        this.imageSrc = imageSrc;
+    public BufferedImage getImage() {
+        return image.image;
+    }
+
+    public void setImage() {
+        this.image = image.nextNode;
     }
 
     public int getX() {
@@ -81,6 +92,7 @@ public abstract class Entity {
         }
         if (width < 0) {
             width *= -1;
+            x -= width;
         }
     }
 
@@ -90,6 +102,7 @@ public abstract class Entity {
         }
         if (width > 0) {
             width *= -1;
+            x -= width;
         }
     }
 
@@ -120,7 +133,8 @@ public abstract class Entity {
         jumpingDistance = 64;
     }
 
-//    Rectangle rec = new Rectangle(x, y, size, size);
+
+    //    Rectangle rec = new Rectangle(x, y, size, size);
 
     @Override
     public String toString() {
