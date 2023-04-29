@@ -9,11 +9,11 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 
 public class MapRenderer {
-    Tile[][] map;
+    Map map;
     String backgroundSrc;
 
     public MapRenderer(Map map) {
-        this.map = map.getMapMatrix();
+        this.map = map;
         this.backgroundSrc = map.getBackground();
     }
 
@@ -28,7 +28,7 @@ public class MapRenderer {
             e.printStackTrace();
         }
 
-        for (Tile[] row : map) {
+        for (Tile[] row : map.getMapMatrix()) {
             for (Tile tile : row) {
 //                System.out.println(tile);
                 if (tile == null) continue;
@@ -39,7 +39,7 @@ public class MapRenderer {
                     e.printStackTrace();
                 }
 
-                g2.drawImage(image, tile.getX(), tile.getY(), 48, 48, null);
+                g2.drawImage(image, tile.getX() - map.getOffsetX(), tile.getY(), 48, 48, null);
             }
         }
     }

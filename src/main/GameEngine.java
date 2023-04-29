@@ -20,7 +20,7 @@ public class GameEngine implements Runnable {
     Player player = new Player(keyH);
 
     //    player.setX
-    Map map = new Map(maxScreenRow, maxScreenColumn);
+    Map map = new Map(maxScreenRow, maxScreenColumn, 32, 12);
 
     PlayerController playerController = new PlayerController(player, keyH, map);
 

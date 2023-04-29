@@ -3,6 +3,7 @@ package main.Model;
 import main.Model.Tiles.Magma;
 import main.Model.Tiles.RockyRoad;
 import main.Model.Tiles.Tile;
+import main.Model.Tiles.VinelikePattern;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -10,8 +11,23 @@ import java.io.InputStreamReader;
 
 public class Map {
     private Tile mapMatrix[][];
+    Tile[][] map;
 
     private String background;
+    int offsetX = 0;
+    int offsetY = 0;
+    int maxOffsetX = 0;
+    int maxOffsetY = 0;
+
+    public void setOffsetX(int offsetX) {
+        this.offsetX = offsetX;
+//        setMap();
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+//        setMap();
+    }
 
     private static class Level {
         String mapSrc;
@@ -35,7 +51,7 @@ public class Map {
             new Level("/res/maps/map1.txt", "/res/backgrounds/Background1.png")
     };
 
-    int maxScreenRow, maxScreenColumn, multiplyX, multiplyY;
+    int maxScreenRow, maxScreenColumn, totalScreenColumn, totalScreenRow;
 
     public Tile getTileOption(int option) {
         switch (option) {
@@ -45,6 +61,8 @@ public class Map {
                 return new RockyRoad();
             case 2:
                 return new Magma();
+            case 3:
+                return new VinelikePattern();
             default:
                 return new RockyRoad();
         }
@@ -59,12 +77,12 @@ public class Map {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             int option;
 
-            for (int i = 0; i < maxScreenRow * multiplyY; i++) {
+            for (int i = 0; i < totalScreenRow; i++) {
 //                System.out.println("1");
 
                 String row = br.readLine();
                 String[] numbers = row.split(" ");
-                for (int j = 0; j < maxScreenColumn * multiplyY; j++) {
+                for (int j = 0; j < totalScreenColumn; j++) {
                     option = Integer.parseInt(numbers[j]);
 //                    System.out.println("2");
                     if (option == 0) {
@@ -81,8 +99,39 @@ public class Map {
         }
     }
 
-//    public Tile[][] getMapMatrix() {
-//        return mapMatrix;
+    public int getWidth() {
+        return maxScreenColumn * 48;
+    }
+
+    public int getHeight() {
+        return maxScreenRow * 48;
+    }
+
+    public Tile[][] getMapMatrix() {
+        return mapMatrix;
+    }
+
+//    public Tile[][] getMap() {
+//        return map;
+//    }
+
+    public int getOffsetX() {
+        return offsetX;
+    }
+
+    public int getOffsetY() {
+        return offsetY;
+    }
+
+//    public void setMap() {
+//        for (int i = 0; i < maxScreenRow; i++) {
+//            for (int j = 0; j < maxScreenColumn; j++) {
+//                map[i][j] = mapMatrix[i + offsetY][j + offsetX];
+//                if (map[i][j] == null) continue;
+//                map[i][j].setX(48 * j);
+//                map[i][j].setY(48 * i);
+//            }
+//        }
 //    }
 
     public void setMapMatrix(int index) {
@@ -95,10 +144,7 @@ public class Map {
     }
 
     public Tile getTile(int x, int y) {
-        return mapMatrix[y / 48][x / 48];
-    }
-    public Tile[][] getMapMatrix() {
-        return mapMatrix;
+        return mapMatrix[(y + offsetY) / 48][(x + offsetX) / 48];
     }
 
     public String getBackground() {
@@ -109,10 +155,22 @@ public class Map {
         this.background = levels[index - 1].getBackgroundSrc();
     }
 
-    public Map(int maxScreenRow, int maxScreenColumn) {
+    public int getMaxOffsetX() {
+        return maxOffsetX;
+    }
+
+    public int getMaxOffsetY() {
+        return maxOffsetY;
+    }
+
+    public Map(int maxScreenRow, int maxScreenColumn, int totalScreenColumn, int totalScreenRow) {
         this.maxScreenColumn = maxScreenColumn;
         this.maxScreenRow = maxScreenRow;
-        this.mapMatrix = new Tile[maxScreenRow][maxScreenColumn];
+        this.totalScreenColumn = totalScreenColumn;
+        this.totalScreenRow = totalScreenRow;
+        this.mapMatrix = new Tile[totalScreenRow][totalScreenColumn];
+        this.maxOffsetX = (totalScreenColumn - maxScreenColumn) * 48;
+        this.maxOffsetY = (totalScreenRow - maxScreenRow) * 48;
         setMapMatrix(1);
         setBackground(1);
     }
