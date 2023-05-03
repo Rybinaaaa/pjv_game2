@@ -17,19 +17,25 @@ public class PlayerController {
             isCollisionBottom = false,
             isCollisionMove = false;
 
-    private boolean isCollision(int x, int y) {
-        Tile tile = map.getTile(x, y);
-//        the best way to check damage is here..
-        if (tile == null) return false;
-        return tile.isCollision();
-    }
+
+//    private boolean isCollision(int x, int y) {
+//        Tile tile = map.getTile(x, y);
+////        the best way to check damage is here..
+//        if (tile == null) return false;
+//        return tile.isCollision();
+//    }
 
     ;
 
-    private void updateCollision() {
-        isCollisionTop = isCollision(player.getX(), player.getY());
-        isCollisionBottom = isCollision(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight());
-        isCollisionMove = isCollision(player.getX() + player.getWidth() * 4 / 5, player.getY() + 48);
+    private void updateMoveState() {
+        Tile top = map.getTile(player.getX(), player.getY());
+        Tile bottom = map.getTile(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight());
+        Tile present = map.getTile(player.getX() + player.getWidth() / 2, player.getY() + 48);
+        Tile next = map.getTile(player.getX() + player.getWidth() * 4 / 5, player.getY() + 48);
+        isCollisionTop = top.isCollision();
+        isCollisionBottom = bottom.isCollision();
+        isCollisionMove = next.isCollision();
+        player.setHealth(player.getHealth() - present.getDamaging());
     }
 
     public PlayerController(Player player, KeyHandler keyH, Map map) {
@@ -45,7 +51,7 @@ public class PlayerController {
     private boolean jumping = false;
 
     private void moving() {
-        updateCollision();
+        updateMoveState();
         moveDown();
         if (keyH.upPressed && !jumping && isCollisionBottom) {
 //            player.setDirection("up");

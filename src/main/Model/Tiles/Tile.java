@@ -3,7 +3,7 @@ package main.Model.Tiles;
 public abstract class Tile {
     String imgSrc;
     boolean collision;
-    int damaging;
+    double damaging;
 
     public int getX() {
         return x;
@@ -43,7 +43,7 @@ public abstract class Tile {
 //        return damaging;
 //    }
 
-    public int getDamaging() {
+    public double getDamaging() {
         return damaging;
     }
 

@@ -1,9 +1,6 @@
 package main.Model;
 
-import main.Model.Tiles.Magma;
-import main.Model.Tiles.RockyRoad;
-import main.Model.Tiles.Tile;
-import main.Model.Tiles.VinelikePattern;
+import main.Model.Tiles.*;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -56,7 +53,7 @@ public class Map {
     public Tile getTileOption(int option) {
         switch (option) {
             case 0:
-                return null;
+                return new Air();
             case 1:
                 return new RockyRoad();
             case 2:
@@ -78,20 +75,14 @@ public class Map {
             int option;
 
             for (int i = 0; i < totalScreenRow; i++) {
-//                System.out.println("1");
 
                 String row = br.readLine();
                 String[] numbers = row.split(" ");
                 for (int j = 0; j < totalScreenColumn; j++) {
                     option = Integer.parseInt(numbers[j]);
-//                    System.out.println("2");
-                    if (option == 0) {
-                        continue;
-                    }
                     mapMatrix[i][j] = getTileOption(option);
                     mapMatrix[i][j].setX(48 * j);
                     mapMatrix[i][j].setY(48 * i);
-//                    System.out.println("---" + mapMatrix[i][j]);
                 }
             }
         } catch (Exception e) {

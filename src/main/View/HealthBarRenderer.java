@@ -49,8 +49,8 @@ public class HealthBarRenderer {
 
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
-        int healthRank = entity.getMaxHealth() / 5;
-        image = healthArray[entity.getHealth() / healthRank - 1];
+        int healthRank = entity.getMaxHealth() / 4;
+        image = healthArray[(int)entity.getHealth() / healthRank];
 
         g2.drawImage(image, x, y, size * 3, size * 3, null);
     }

@@ -22,7 +22,6 @@ public class MapRenderer {
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream(backgroundSrc));
-//                    System.out.println(image);
             g2.drawImage(image, AffineTransform.getRotateInstance(0), null);
         } catch (IOException e) {
             e.printStackTrace();
@@ -30,11 +29,9 @@ public class MapRenderer {
 
         for (Tile[] row : map.getMapMatrix()) {
             for (Tile tile : row) {
-//                System.out.println(tile);
-                if (tile == null) continue;
+                if (tile.getImgSrc() == null) continue;
                 try {
                     image = ImageIO.read(getClass().getResourceAsStream(tile.getImgSrc()));
-//                    System.out.println(image);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

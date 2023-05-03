@@ -63,6 +63,5 @@ public class GameEngine implements Runnable {
 
     public void update() {
         playerController.update();
-//        System.out.println(player.x);
     }
 }

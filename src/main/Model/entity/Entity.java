@@ -9,21 +9,21 @@ public abstract class Entity {
     private int speedX;
     private int speedY;
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    public void setHealth(int health) {
-        if (health <= maxHealth) {
+    public void setHealth(double health) {
+        if (health >= maxHealth) {
             this.health = maxHealth;
-        } {
-            if (health <= 0) {
-                this.health = 0;
-            }
+        } else if (health <= 0) {
+            this.health = 0;
+        } else {
+            this.health = health;
         }
     }
 
-    private int health;
+    private double health;
 
     public int getMaxHealth() {
         return maxHealth;
