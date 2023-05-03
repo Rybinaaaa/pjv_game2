@@ -19,6 +19,7 @@ public class PlayerController {
 
     private boolean isCollision(int x, int y) {
         Tile tile = map.getTile(x, y);
+//        the best way to check damage is here..
         if (tile == null) return false;
         return tile.isCollision();
     }

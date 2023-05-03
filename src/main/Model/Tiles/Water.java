@@ -4,6 +4,6 @@ public class Water extends Tile{
     public Water() {
         this.imgSrc = "/res/tyles/Water.png";
         this.collision = false;
-        this.damaging = false;
+        this.damaging = 0;
     }
 }

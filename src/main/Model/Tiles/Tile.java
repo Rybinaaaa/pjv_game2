@@ -3,7 +3,7 @@ package main.Model.Tiles;
 public abstract class Tile {
     String imgSrc;
     boolean collision;
-    boolean damaging;
+    int damaging;
 
     public int getX() {
         return x;
@@ -39,13 +39,17 @@ public abstract class Tile {
         this.collision = collision;
     }
 
-    public boolean isDamaging() {
+//    public boolean isDamaging() {
+//        return damaging;
+//    }
+
+    public int getDamaging() {
         return damaging;
     }
 
-    public void setDamaging(boolean damaging) {
-        this.damaging = damaging;
-    }
+//    public void setDamaging(boolean damaging) {
+//        this.damaging = damaging;
+//    }
 
     @Override
     public String toString() {

@@ -4,6 +4,6 @@ public class VinelikePattern extends Tile{
     public VinelikePattern() {
         this.imgSrc = "/res/tyles/Vinelike_Pattern.png";
         this.collision = true;
-        this.damaging = false;
+        this.damaging = 0;
     }
 }

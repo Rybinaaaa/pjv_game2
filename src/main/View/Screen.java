@@ -19,11 +19,11 @@ public class Screen extends JPanel {
     public int maxScreenRow;
     int screenWidth; // 768 pixels
     int screenHeight; // 576 pixels
-    //    KeyHandler keyH = new KeyHandler();
     Player player;
     PlayerRenderer playerRenderer;
 
     MapRenderer mapRenderer;
+    HealthBarRenderer playerHealth;
 
 
     public Screen(int originalTileSize, int scale, int maxScreenColumn, int maxScreenRow, Player player, KeyHandler keyH, Map map) {
@@ -38,6 +38,7 @@ public class Screen extends JPanel {
 //        this.player = player;
         player.setScreen(this);
         playerRenderer = new PlayerRenderer(player);
+        this.playerHealth = new HealthBarRenderer(player);
 
 //        ????
         this.mapRenderer = new MapRenderer(map);
@@ -49,7 +50,6 @@ public class Screen extends JPanel {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.setFocusable(true);
-
     }
 
 //    Player player = new Player(this, keyH);
@@ -65,6 +65,8 @@ public class Screen extends JPanel {
         mapRenderer.draw(g2);
 
         playerRenderer.draw(g2);
+
+        playerHealth.draw(g2);
 
         g2.dispose();
     }

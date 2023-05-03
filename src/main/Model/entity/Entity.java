@@ -4,8 +4,33 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
-    private int x, y, speedX, speedY;
-//    int size = 48;
+    private int x;
+    private int y;
+    private int speedX;
+    private int speedY;
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        if (health <= maxHealth) {
+            this.health = maxHealth;
+        } {
+            if (health <= 0) {
+                this.health = 0;
+            }
+        }
+    }
+
+    private int health;
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    private int maxHealth;
+
     private int width, height;
     NodeImage image;
     public String direction;
@@ -72,20 +97,6 @@ public abstract class Entity {
         return height;
     }
 
-//    public String getDirection() {
-//        return direction;
-//    }
-//
-//    public void setDirection(String direction) {
-//        this.direction = direction;
-//        if (speedX > 0 && width < 0) {
-//            width *= -1;
-//        }
-//        if (speedX < 0 && width > 0) {
-//            width *= -1;
-//        }
-//    }
-
     public void moveRight() {
         if (speedX < 0) {
             speedX *= -1;
@@ -131,13 +142,13 @@ public abstract class Entity {
         speedY = 3;
         direction = "down";
         jumpingDistance = 64;
+        maxHealth = 100;
+        health = maxHealth;
     }
 
 
-    //    Rectangle rec = new Rectangle(x, y, size, size);
-
     @Override
     public String toString() {
-        return String.format("x = %d; y = %d; direction = %s; speedX = %d; speedy = %d", x, y, direction,speedX, speedY);
+        return String.format("x = %d; y = %d; direction = %s; speedX = %d; speedy = %d", x, y, direction, speedX, speedY);
     }
 }

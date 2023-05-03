@@ -1,7 +1,6 @@
 package main;
 
 import main.Controller.KeyHandler;
-import main.Controller.MapController;
 import main.Model.Map;
 import main.Model.entity.Player;
 import main.Controller.PlayerController;
@@ -24,7 +23,6 @@ public class GameEngine implements Runnable {
 
     PlayerController playerController = new PlayerController(player, keyH, map);
 
-    MapController mapController = new MapController(map, player);
 
     public Screen screen = new Screen(originalTileSize, scale, maxScreenColumn, maxScreenRow, player, keyH, map);
     int FPS = 60;
@@ -65,7 +63,6 @@ public class GameEngine implements Runnable {
 
     public void update() {
         playerController.update();
-        mapController.update();
 //        System.out.println(player.x);
     }
 }

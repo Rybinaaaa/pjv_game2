@@ -1,4 +1,4 @@
-package main.Model.entity;
+package main.Model;
 
 public class HealthBar {
 }
